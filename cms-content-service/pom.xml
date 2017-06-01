@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>cms-content</groupId>
+    <artifactId>cms-content</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>cms-content-service</groupId>
+  <artifactId>cms-content-service</artifactId>
+  <packaging>war</packaging>
+  
+    <dependencies>
+			<dependency>
+		 		<groupId>cms-content-dao</groupId>
+		 		<artifactId>cms-content-dao</artifactId>
+		 		<version>0.0.1-SNAPSHOT</version>
+		 	</dependency>
+		 	
+		 	<dependency>
+		 		<groupId>cms-common</groupId>
+		 		<artifactId>cms-common</artifactId>
+		 		<version>0.0.1-SNAPSHOT</version>
+		 	</dependency>
+		 	
+		 	<dependency>
+		 		<groupId>cms-content-interface</groupId>
+		 		<artifactId>cms-content-interface</artifactId>
+		 		<version>0.0.1-SNAPSHOT</version>
+		 	</dependency>
+		 	
+		  	<dependency>
+				 <groupId>net.sourceforge.htmlunit</groupId>
+				 <artifactId>htmlunit</artifactId>
+			</dependency>
+			
+		 	<dependency>
+			    <groupId>com.google.code.gson</groupId>
+			    <artifactId>gson</artifactId>
+			</dependency>
+			
+			
+			<!-- JSP相关 -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jsp-api</artifactId>
+			</dependency>
+ 
+    </dependencies>
+    
+    <build>  
+		<plugins>  
+		
+			<!-- 当maven install时,找不到 web.xml 时候 可以使用此插件进行解决 -->
+		    <plugin>  
+		        <groupId>org.apache.maven.plugins</groupId>  
+		        <artifactId>maven-war-plugin</artifactId>  
+		        <version>2.4</version>  
+		        <configuration>  
+		               <webXml>src\webapp\WEB-INF\web.xml</webXml>            
+		        </configuration>  
+		    </plugin>  
+		</plugins>  
+	</build>  
+   
+  
+</project>
