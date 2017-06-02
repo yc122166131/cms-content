@@ -2,13 +2,13 @@ package com.yc.utils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.cn.yc.utils.GsonUtils;
-import com.cn.yc.utils.JsonUtils;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -17,7 +17,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.google.gson.JsonObject;
 
 public class HtmlUnitUtils {
 	
@@ -27,7 +26,7 @@ public class HtmlUnitUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String link = "https://coll.jd.com/list.html?sub=13278";
+		String link = "http://list.jd.com/list.html?cat=670,677,688";
 		//https://list.jd.com/list.html?cat=670,686,690&page=2
 		
 		WebClient webClient=new WebClient();
@@ -50,8 +49,8 @@ public class HtmlUnitUtils {
 					 //System.out.println(specDiv.asXml());
 					 skuid = specDiv.getAttribute("data-sku");
 				}
-				//genPic(skuid,webClient); // collect pic and productName
-				//genPrice(div,webClient,skuid); //collect price 
+				genPic(skuid,webClient); // collect pic and productName
+				genPrice(div,webClient,skuid); //collect price 
 				genCommentAmount(div,webClient,skuid); //collect the commentAmount
 			
 			}
@@ -131,10 +130,39 @@ public class HtmlUnitUtils {
 				}
 				if("commentAmount".equals(kind)){
 					
-					Map a = GsonUtils.parseDatatoMap(json,"list");
-					System.out.println(a);
-				}
+					/*Gson 将其text/html 文本进行 解析 成  
+					 * {CommentsCount=
+					 * [
+					 * {SkuId=582599.0,
+					 * ProductId=582599.0, 
+					 * ShowCount=5500.0, 
+					 * ShowCountStr=5500+, 
+					 * CommentCountStr=9.3万+, 
+					 * PoorRateStyle=2.0}
+					 * ]}*/
+					
+					
+					Map comeentDescMap = GsonUtils.parseDatatoMap(json,"list"); //先转换成 map 形式  (如上格式)
+					
+					
+					Iterator entries =  comeentDescMap.entrySet().iterator();  //遍历map 获取value  (List格式)
+					  
+					while (entries.hasNext()) {  
+					  
+					    Map.Entry entry = (Map.Entry) entries.next();  
 
+					    // String key = String.valueOf(entry.getKey()); 
+					    //System.out.println(entry.getValue().getClass());  //ArrayList  （java.util.ArrayList）
+					    List li = (List) entry.getValue();
+					    //System.out.println(li.get(0).getClass().getName());  //com.google.gson.internal.LinkedTreeMap
+					    //一般我们gson 解开获取到的 {} 对象的 类型 就是为 LinkedTreeMap;
+					    Map commentStrMap = (Map)li.get(0);
+					    System.out.println(commentStrMap.get(keyword).toString());
+					    
+					    
+					}  
+					 
+				}
 				return returnValue;
 			}
 		} catch (FailingHttpStatusCodeException e) {
@@ -144,10 +172,7 @@ public class HtmlUnitUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 		return returnValue;
-		
 	}
 	
 
