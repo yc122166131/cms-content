@@ -28,13 +28,29 @@ public class HtmlUnitUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		jdDataGenerator();
+	}
+	
+	/**
+	 * jd 数据采集 主入口
+	 */
+	public  static void jdDataGenerator(){
+		List<JDProduction> main_jdInfoList  = new ArrayList<JDProduction>();
 		String beginLink = "https://list.jd.com/list.html?cat=670,686,690";
+		long startTime1 = System.currentTimeMillis();
 		List<String>  urls = genURLList(0,beginLink);
+		long endTime1 = System.currentTimeMillis();
+		System.out.println((endTime1 - startTime1)/1000);
 		
+		System.out.println("=======================");
+		long startTime = System.currentTimeMillis();
 		for(int k = 0 ; k < urls.size() ; k++){
-			handleEachPageInfo(urls.get(k));
+			List<JDProduction> li = handleEachPageInfo(urls.get(k));
+			main_jdInfoList.addAll(li);
 		}
-		
+		System.out.println(main_jdInfoList);
+		long endTime = System.currentTimeMillis();
+		System.out.println((endTime - startTime)/1000);
 	}
 	
 	
@@ -91,8 +107,8 @@ public class HtmlUnitUtils {
 	}
 	
 	
-	public static void handleEachPageInfo(String link){
-		List<String> s = new ArrayList<String>();
+	public static List<JDProduction> handleEachPageInfo(String link){
+		List<JDProduction> jdcollectiontList  = new ArrayList<JDProduction>();
 		
 		WebClient webClient=new WebClient();
 		webClient.getOptions().setCssEnabled(false); 
@@ -119,6 +135,7 @@ public class HtmlUnitUtils {
 				genPic(skuid,webClient,jd); // collect pic and productName
 				genPrice(div,webClient,skuid,jd); //collect price 
 				genCommentAmount(div,webClient,skuid,jd); //collect the commentAmount
+				jdcollectiontList.add(jd);
 			}
 		} catch (FailingHttpStatusCodeException e) {
 			e.printStackTrace();
@@ -130,7 +147,7 @@ public class HtmlUnitUtils {
 			 webClient.close();
 		}
 		
-		
+		return jdcollectiontList;
 		
 	}
 	
@@ -148,7 +165,7 @@ public class HtmlUnitUtils {
 			if(imgDom.isEmpty()){
 				imgDom = himg.getAttribute("src"); //特殊情况
 			}
-			System.out.println(imgDom);
+			//System.out.println(imgDom);
 			
 			JD.setImgPath(imgDom); 
 			genproductionName(page,JD); ////进店   获取商品名称 
@@ -167,7 +184,7 @@ public class HtmlUnitUtils {
 	public static void genproductionName(HtmlPage page,JDProduction JD){
 		List<?> nameLists= page.getByXPath("//div[@class='sku-name']");
 		HtmlDivision nameDom = (HtmlDivision) nameLists.get(0);
-		System.out.println(nameDom.asText());
+		//System.out.println(nameDom.asText());
 		
 		JD.setProductName(nameDom.asText());
 	}
@@ -183,11 +200,11 @@ public class HtmlUnitUtils {
 			List<?> shopNameLists= page.getByXPath("//div[@class='aside']/div[1]/div[1]/div[@class='mt']/h3[1]/a[1]");
 			if(shopNameLists.size()>0){
 				HtmlAnchor shopNameDom = (HtmlAnchor) shopNameLists.get(0);
-				System.out.println(shopNameDom.getAttribute("title"));
+				//System.out.println(shopNameDom.getAttribute("title"));
 				
 				JD.setCompanyName(shopNameDom.getAttribute("title"));
 			}else{
-				System.out.println("nothing!");
+				//System.out.println("nothing!");
 				JD.setCompanyName("");
 			}
 	}
@@ -205,7 +222,7 @@ public class HtmlUnitUtils {
 		public static void genCommentAmount(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
 				String link = "https://club.jd.com/comment/productCommentSummaries.action?referenceIds="+skuid;
 				String commentStr_amount = getDataByJsonp_Common(link,"CommentCountStr",client,"commentAmount");
-				System.out.println(commentStr_amount);
+				//System.out.println(commentStr_amount);
 				
 				JD.setCommentNum(commentStr_amount);
 		}
@@ -215,7 +232,7 @@ public class HtmlUnitUtils {
 		public static void genPrice(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
 			String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C";
 			String price = getDataByJsonp_Common(link,"p",client,"price");
-			System.out.println(price);
+			//System.out.println(price);
 			
 			JD.setPrice(price);
 		
@@ -240,7 +257,9 @@ public class HtmlUnitUtils {
 					//获取json
 					String json = response.getContentAsString();
 					
-					
+					/**
+					 * 1. [返回的数据为 application/json 格式]
+					 */
 					if("price".equals(kind)){
 						//获取商品价格   [{"id":"J_11617676063","p":"49.00","m":"49.00","op":"49.00"}]
 						 List list =  GsonUtils.parseDataToList(json);
@@ -252,6 +271,12 @@ public class HtmlUnitUtils {
 							 }
 						 }
 					}
+					
+					
+					
+					/**
+					 * 2. [返回的数据为 text/html 格式]
+					 */
 					if("commentAmount".equals(kind)){
 						
 						/*Gson 将其text/html 文本进行 解析 成  
@@ -281,8 +306,8 @@ public class HtmlUnitUtils {
 						    //System.out.println(li.get(0).getClass().getName());  //com.google.gson.internal.LinkedTreeMap
 						    //一般我们gson 解开获取到的 {} 对象的 类型 就是为 LinkedTreeMap;
 						    Map commentStrMap = (Map)li.get(0);
-						    System.out.println(commentStrMap.get(keyword).toString());
-						    
+						    //System.out.println(commentStrMap.get(keyword).toString());
+						    returnValue = commentStrMap.get(keyword).toString();
 						    
 						}  
 						 
