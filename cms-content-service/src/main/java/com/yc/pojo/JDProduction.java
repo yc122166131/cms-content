@@ -6,7 +6,7 @@ public class JDProduction implements Serializable {
 
 	private String productName; //商品名称
 	private String imgPath; //图片地址
-	private double price; //商品价格
+	private String price; //商品价格
 	private String commentAmount; //评论数量
 	private String companyName; //公司名(xxx专营店)
 	
@@ -23,10 +23,10 @@ public class JDProduction implements Serializable {
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
-	public double getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getCommentNum() {
