@@ -55,10 +55,10 @@
  
     </dependencies>
     
-    <build>  
+   <!--  <build>  
 		<plugins>  
 		
-			<!-- 当maven install时,找不到 web.xml 时候 可以使用此插件进行解决 -->
+			当maven install时,找不到 web.xml 时候 可以使用此插件进行解决
 		    <plugin>  
 		        <groupId>org.apache.maven.plugins</groupId>  
 		        <artifactId>maven-war-plugin</artifactId>  
@@ -68,7 +68,7 @@
 		        </configuration>  
 		    </plugin>  
 		</plugins>  
-	</build>  
+	</build>   -->
    
   
 </project>
