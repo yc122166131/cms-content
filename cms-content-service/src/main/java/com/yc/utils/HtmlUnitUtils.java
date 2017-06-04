@@ -38,7 +38,7 @@ public class HtmlUnitUtils {
 		List<JDProduction> main_jdInfoList  = new ArrayList<JDProduction>();
 		String beginLink = "https://list.jd.com/list.html?cat=670,686,690";
 		long startTime1 = System.currentTimeMillis();
-		List<String>  urls = genURLList(0,beginLink);
+		List<String>  urls = genURLList(6,beginLink);
 		long endTime1 = System.currentTimeMillis();
 		System.out.println((endTime1 - startTime1)/1000);
 		
