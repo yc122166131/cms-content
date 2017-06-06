@@ -7,4 +7,51 @@
   </parent>
   <groupId>cms-content-dao</groupId>
   <artifactId>cms-content-dao</artifactId>
+  
+  		<dependencies>
+		  		<!-- 添加mybatis的依赖 -->
+				<!-- Mybatis -->
+				<dependency>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis-spring</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>com.github.miemiedev</groupId>
+					<artifactId>mybatis-paginator</artifactId>
+				</dependency>
+				<!-- MySql -->
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+				</dependency>
+				<!-- 连接池 -->
+				<dependency>
+					<groupId>com.alibaba</groupId>
+					<artifactId>druid</artifactId>
+				</dependency>
+  		</dependencies>
+  		
+  <build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<!-- <resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource> -->
+		</resources>
+	</build>
+  
+  
+  
 </project>

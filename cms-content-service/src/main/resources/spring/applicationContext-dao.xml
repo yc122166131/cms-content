@@ -21,6 +21,7 @@
 		<property name="maxActive" value="10" />
 		<property name="minIdle" value="5" />
 	</bean>
+	
 	<!-- SqlSessionFactory -->
 	<!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -31,7 +32,7 @@
 	</bean>
 	<!-- Mapper映射文件的包扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.taotao.mapper" />
+		<property name="basePackage" value="com.yc.content.mapper" />
 	</bean>
 	
 </beans>
