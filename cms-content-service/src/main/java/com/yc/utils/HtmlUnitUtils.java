@@ -44,7 +44,7 @@ public class HtmlUnitUtils {
 	 * jd 数据采集 主入口
 	 */
 	public  static void jdDataGenerator(){
-		int startNum = 0; //执行次数(即点多少次下一页)
+		int startNum = 1; //执行次数(即点多少次下一页)
 		String beginLink = "https://list.jd.com/list.html?cat=9855,9856,9900";  //开始执行起始link
 		
 		List<JDProduction> main_jdInfoList  = new ArrayList<JDProduction>();
@@ -118,7 +118,6 @@ public class HtmlUnitUtils {
 		HtmlPage page = null ; //这里是 htmlPage 
 		try {
 			page = webClient.getPage(url);
-			System.out.println(page.asXml());
 			List<?> list2 = page.getByXPath("//div[@class='s-title']/h3/b");
 			HtmlBold subCateDom = (HtmlBold) list2.get(0);
 			subCateName = subCateDom.asText();  

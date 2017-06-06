@@ -56,11 +56,20 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="index.html"><span>Metro</span></a>
+				<a class="brand" href="index.html"><span>end-front</span></a>
 								
 				<!-- start: Header Menu -->
 				<div class="nav-no-collapse header-nav">
 					<ul class="nav pull-right">
+					
+						<li class="dropdown hidden-phone ">
+							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+								爬虫
+							</a>
+						</li>
+					
+					
+					
 						<li class="dropdown hidden-phone">
 							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 								<i class="halflings-icon white warning-sign"></i>
@@ -70,20 +79,6 @@
  									<span>You have 11 notifications</span>
 									<a href="#refresh"><i class="icon-repeat"></i></a>
 								</li>	
-                            	<li>
-                                    <a href="#">
-										<span class="icon blue"><i class="icon-user"></i></span>
-										<span class="message">New user registration</span>
-										<span class="time">1 min</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon green"><i class="icon-comment-alt"></i></span>
-										<span class="message">New comment</span>
-										<span class="time">7 min</span> 
-                                    </a>
-                                </li>
 							</ul>
 						</li>
 						<!-- start: Notifications Dropdown -->
@@ -210,6 +205,7 @@
 					<ul class="nav nav-tabs nav-stacked main-menu">
 						<li><a href="gallery.html"><i class="icon-picture"></i><span class="hidden-tablet"> Gallery</span></a></li>
 						<li><a href="table.html"><i class="icon-align-justify"></i><span class="hidden-tablet"> Tables</span></a></li>
+						<li><a href="crawl.jsp"><i class="icon-picture"></i><span class="hidden-tablet"> 爬虫</span></a></li>
 					</ul>
 				</div>
 			</div>
