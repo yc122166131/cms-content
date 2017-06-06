@@ -15,16 +15,25 @@ import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlBold;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
+import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.yc.pojo.JDProduction;
 
+/**
+ * 正式版
+ * @author yuanchen
+ *
+ */
 public class HtmlUnitUtils {
 	
 	
 	/**
-	 * //HtmlImage(img) . HtmlDivision(div) , HtmlItalic(i) ,HtmlEmphasis(em)
+	 * //HtmlImage(img) . HtmlDivision(div) , HtmlItalic(i) ,HtmlEmphasis(em),HtmlAnchor(a)
+	 * HtmlBold("<b>")
+	 * HtmlListItem(li)
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -35,23 +44,98 @@ public class HtmlUnitUtils {
 	 * jd 数据采集 主入口
 	 */
 	public  static void jdDataGenerator(){
+		int startNum = 0; //执行次数(即点多少次下一页)
+		String beginLink = "https://list.jd.com/list.html?cat=9855,9856,9900";  //开始执行起始link
+		
 		List<JDProduction> main_jdInfoList  = new ArrayList<JDProduction>();
-		String beginLink = "https://list.jd.com/list.html?cat=670,686,690";
 		long startTime1 = System.currentTimeMillis();
-		List<String>  urls = genURLList(6,beginLink);
+		List<String>  urls = genURLList(startNum,beginLink);
 		long endTime1 = System.currentTimeMillis();
-		System.out.println((endTime1 - startTime1)/1000);
+		System.out.println((endTime1 - startTime1)/1000+"秒");
 		
 		System.out.println("=======================");
 		long startTime = System.currentTimeMillis();
+		
+		String supCateName = genSupCateName(beginLink);//生成大类名称(只生成一遍)
+		String subCateName = genSubCateName(beginLink);//生成小类名称(只生成一遍)
+		
 		for(int k = 0 ; k < urls.size() ; k++){
-			List<JDProduction> li = handleEachPageInfo(urls.get(k));
+			List<JDProduction> li = handleEachPageInfo(urls.get(k),supCateName,subCateName);
 			main_jdInfoList.addAll(li);
 		}
 		System.out.println(main_jdInfoList);
 		long endTime = System.currentTimeMillis();
-		System.out.println((endTime - startTime)/1000);
+		System.out.println((endTime - startTime)/1000+"秒");
 	}
+	
+	
+	/**
+	 * 生成大类名称
+	 * @return
+	 */
+	private static String genSupCateName(String url) {
+		
+		String supCateName = "";
+		WebClient webClient=new WebClient();
+		webClient.getOptions().setCssEnabled(false); 
+		webClient.getOptions().setJavaScriptEnabled(false); 
+		HtmlPage page = null ; //这里是 htmlPage 
+		try {
+			page = webClient.getPage(url);
+		    //List<?> list = page.getByXPath("//div[end-with(@class,'one-level')]");
+			//ends-with 不起作用的时候用下面的 方法获取 !
+		    List<?> list1 = page.getByXPath("//div"
+		    		+ "[substring(@class, string-length(@class)"
+		    		+ " - string-length('one-level') +1) = 'one-level']"
+		    		+ "/a");
+		    HtmlAnchor supCateDom = (HtmlAnchor) list1.get(0);
+		    supCateName  =  supCateDom.asText();
+		} catch (FailingHttpStatusCodeException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			webClient.close();
+		}
+		return supCateName;
+	}
+
+	
+	
+	/**
+	 * 生成小类名称
+	 * @return
+	 */
+	private static String genSubCateName(String url) {
+		
+		
+		String subCateName = "";
+		WebClient webClient=new WebClient();
+		webClient.getOptions().setCssEnabled(false); 
+		webClient.getOptions().setJavaScriptEnabled(false); 
+		HtmlPage page = null ; //这里是 htmlPage 
+		try {
+			page = webClient.getPage(url);
+			System.out.println(page.asXml());
+			List<?> list2 = page.getByXPath("//div[@class='s-title']/h3/b");
+			HtmlBold subCateDom = (HtmlBold) list2.get(0);
+			subCateName = subCateDom.asText();  
+		} catch (FailingHttpStatusCodeException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			webClient.close();
+		}
+		return subCateName;
+		
+		
+	}
+
 	
 	
 	
@@ -107,7 +191,12 @@ public class HtmlUnitUtils {
 	}
 	
 	
-	public static List<JDProduction> handleEachPageInfo(String link){
+	/**
+	 * 执行 爬取 每一页的 数据
+	 * @param link
+	 * @return
+	 */
+	public static List<JDProduction> handleEachPageInfo(String link,String supCateName,String subCateName){
 		List<JDProduction> jdcollectiontList  = new ArrayList<JDProduction>();
 		
 		WebClient webClient=new WebClient();
@@ -123,7 +212,8 @@ public class HtmlUnitUtils {
 			//System.out.println(divLists);
 			JDProduction jd = null;
 			for(int j = 0 ; j < divLists.size() ; j++){
-				jd = new JDProduction();
+				jd = new JDProduction(supCateName,subCateName);
+				
 				HtmlDivision div =  (HtmlDivision)divLists.get(j);
 				String skuid = div.getAttribute("data-sku");
 				if(StringUtils.isBlank(skuid)){
@@ -132,7 +222,7 @@ public class HtmlUnitUtils {
 					 //System.out.println(specDiv.asXml());
 					 skuid = specDiv.getAttribute("data-sku");
 				}
-				genPic(skuid,webClient,jd); // collect pic and productName
+				genPic(skuid,webClient,jd); // collect pic and productName and and genShopName and brandName
 				genPrice(div,webClient,skuid,jd); //collect price 
 				genCommentAmount(div,webClient,skuid,jd); //collect the commentAmount
 				jdcollectiontList.add(jd);
@@ -170,6 +260,7 @@ public class HtmlUnitUtils {
 			JD.setImgPath(imgDom); 
 			genproductionName(page,JD); ////进店   获取商品名称 
 			genShopName(page,JD); //// 进店 获取  经销商店名称
+			genBrandName(page,JD);  //// 进店 获取  商品品牌名称
 			
 		} catch (FailingHttpStatusCodeException | IOException e) {
 			e.printStackTrace();
@@ -185,7 +276,7 @@ public class HtmlUnitUtils {
 		List<?> nameLists= page.getByXPath("//div[@class='sku-name']");
 		HtmlDivision nameDom = (HtmlDivision) nameLists.get(0);
 		//System.out.println(nameDom.asText());
-		
+
 		JD.setProductName(nameDom.asText());
 	}
 	
@@ -207,6 +298,16 @@ public class HtmlUnitUtils {
 				//System.out.println("nothing!");
 				JD.setCompanyName("");
 			}
+	}
+	
+	
+	public static void genBrandName(HtmlPage page,JDProduction JD){
+		
+		List<?> brandNameList = page.getByXPath("//ul[@id='parameter-brand']/li[1]");
+		HtmlListItem barandNameDom = (HtmlListItem) brandNameList.get(0);
+		//System.out.println(page.getUrl().toString());
+		//System.out.println(barandNameDom.getAttribute("title"));
+		JD.setBrandName(barandNameDom.getAttribute("title"));
 	}
 	
 	
