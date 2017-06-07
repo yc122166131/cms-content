@@ -11,6 +11,6 @@ import com.yc.pojo.JDProduction;
  */
 public interface TbproductMapper {
 
-	public int getAll();
+	public List<JDProduction> getAll();
 	
 }
