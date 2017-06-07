@@ -374,6 +374,16 @@
 					<div class="box-content">
 						<form class="form-horizontal">
 						  <fieldset>
+						  
+						    <div class="control-group">
+							  <label class="control-label" for="typeahead">爬jd数据 </label>
+							  <div class="controls">
+								  <input type="text" class="input-xlarge datepicker" id="crawlUrl" value="">
+							   	  <button class="btn btn-primary" type="button" id="crawlOperate">开始</button>
+							  </div>
+							</div>
+						  
+						  
 							<div class="control-group">
 							  <label class="control-label" for="typeahead">Auto complete </label>
 							  <div class="controls">
@@ -766,6 +776,20 @@
 
 		<script src="js/custom.js"></script>
 	<!-- end: JavaScript-->
+	
+	
+		<script type="text/javascript">
+		
+		
+			$("#crawlOperate").click(function(){
+				
+				alert($("#crawlUrl" ).val());
+				
+			});
+		
+			
+		
+		</script>
 	
 </body>
 </html>

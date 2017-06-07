@@ -9,6 +9,14 @@
   <artifactId>cms-content-dao</artifactId>
   
   		<dependencies>
+  		
+  				<dependency>
+					<groupId>cms-content-pojo</groupId>
+					<artifactId>cms-content-pojo</artifactId>
+					<version>0.0.1-SNAPSHOT</version>
+				</dependency>
+  		
+  		
 		  		<!-- 添加mybatis的依赖 -->
 				<!-- Mybatis -->
 				<dependency>
@@ -33,6 +41,7 @@
 					<groupId>com.alibaba</groupId>
 					<artifactId>druid</artifactId>
 				</dependency>
+				
   		</dependencies>
   		
   <build>

@@ -28,6 +28,14 @@
 		 		<version>0.0.1-SNAPSHOT</version>
 		 	</dependency>
 		 	
+		 	<dependency>
+ 				<groupId>cms-content-pojo</groupId>
+ 				<artifactId>cms-content-pojo</artifactId>
+ 				<version>0.0.1-SNAPSHOT</version>
+ 			</dependency>
+		 	
+		 	
+		 	
 		  	<dependency>
 				 <groupId>net.sourceforge.htmlunit</groupId>
 				 <artifactId>htmlunit</artifactId>
@@ -83,13 +91,18 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
 			</dependency>
+			<dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-test</artifactId>
+	        </dependency>
  			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 			</dependency>
- 
- 
- 
+
+
+
+ 			
     </dependencies>
     
     
