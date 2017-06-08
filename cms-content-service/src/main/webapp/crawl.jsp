@@ -378,7 +378,8 @@
 						    <div class="control-group">
 							  <label class="control-label" for="typeahead">爬jd数据 </label>
 							  <div class="controls">
-								  <input type="text" class="input-xlarge datepicker" id="crawlUrl" value="">
+							  	  <input type="text" class="input-small" id="pageCount" value="" placeholder="请输入要爬取多少页">
+								  <input type="text" class="input-large" id="crawlUrl" value="" placeholder="请输入url地址">
 							   	  <button class="btn btn-primary" type="button" id="crawlOperate">开始</button>
 							  </div>
 							</div>
@@ -783,7 +784,20 @@
 		
 			$("#crawlOperate").click(function(){
 				
-				alert($("#crawlUrl" ).val());
+				/* alert($("#crawlUrl" ).val()); */
+				
+				var params = {};
+				params.url = $("#crawlUrl" ).val();
+				params.count = $("#pageCount").val();
+				$.ajax({
+					type:"post",
+					url: "${basePath}/crawl/test.do",
+					data:params,
+					success:function(data){
+						alert(data); 
+					},
+					error:function(){}
+				})
 				
 			});
 		

@@ -37,15 +37,19 @@ public class HtmlUnitUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		jdDataGenerator();
+		List<JDProduction> list  = jdDataGenerator("https://list.jd.com/list.html?cat=1315,1343,9708",1);
+		System.out.println(list);
 	}
 	
 	/**
 	 * jd 数据采集 主入口
+	 * @param beginLink  要爬取的起始url
+	 * @param startNum   要爬取多少页
+	 * @return
 	 */
-	public  static void jdDataGenerator(){
-		int startNum = 1; //执行次数(即点多少次下一页)
-		String beginLink = "https://list.jd.com/list.html?cat=9855,9856,9900";  //开始执行起始link
+	public  static List<JDProduction> jdDataGenerator(String beginLink,int startNum){
+		//int startNum = 1; //执行次数(即点多少次下一页)
+		//String beginLink = "https://list.jd.com/list.html?cat=9855,9856,9900";  //开始执行起始link
 		
 		List<JDProduction> main_jdInfoList  = new ArrayList<JDProduction>();
 		long startTime1 = System.currentTimeMillis();
@@ -66,6 +70,7 @@ public class HtmlUnitUtils {
 		System.out.println(main_jdInfoList);
 		long endTime = System.currentTimeMillis();
 		System.out.println((endTime - startTime)/1000+"秒");
+		return main_jdInfoList;
 	}
 	
 	
@@ -143,7 +148,7 @@ public class HtmlUnitUtils {
 	 * @param len  要爬取的页面总数
 	 * @return
 	 */
-	public static List<String> genURLList(Integer len,String beginLink){
+	private static List<String> genURLList(Integer len,String beginLink){
 		
 		List<String> urlLists = new ArrayList<String>();
 		String link = beginLink;
@@ -195,7 +200,7 @@ public class HtmlUnitUtils {
 	 * @param link
 	 * @return
 	 */
-	public static List<JDProduction> handleEachPageInfo(String link,String supCateName,String subCateName){
+	private static List<JDProduction> handleEachPageInfo(String link,String supCateName,String subCateName){
 		List<JDProduction> jdcollectiontList  = new ArrayList<JDProduction>();
 		
 		WebClient webClient=new WebClient();
@@ -242,7 +247,7 @@ public class HtmlUnitUtils {
 	
 	
 	//进店 获取图片信息 
-	public static void genPic(String skuid,WebClient client,JDProduction JD){
+	private static void genPic(String skuid,WebClient client,JDProduction JD){
 		String TM_href = "http://item.jd.com/"+skuid+".html";
 		HtmlPage page;
 		try {
@@ -271,10 +276,10 @@ public class HtmlUnitUtils {
 	 * 获取商品名称
 	 * @param page
 	 */
-	public static void genproductionName(HtmlPage page,JDProduction JD){
+	private static void genproductionName(HtmlPage page,JDProduction JD){
 		List<?> nameLists= page.getByXPath("//div[@class='sku-name']");
 		HtmlDivision nameDom = (HtmlDivision) nameLists.get(0);
-		//System.out.println(nameDom.asText());
+		System.out.println(nameDom.asText());
 
 		JD.setProductName(nameDom.asText());
 	}
@@ -285,22 +290,22 @@ public class HtmlUnitUtils {
 	 * 获取商店名称
 	 * @param page
 	 */
-	public static void genShopName(HtmlPage page,JDProduction JD){
+	private static void genShopName(HtmlPage page,JDProduction JD){
 			
 			List<?> shopNameLists= page.getByXPath("//div[@class='aside']/div[1]/div[1]/div[@class='mt']/h3[1]/a[1]");
 			if(shopNameLists.size()>0){
 				HtmlAnchor shopNameDom = (HtmlAnchor) shopNameLists.get(0);
-				//System.out.println(shopNameDom.getAttribute("title"));
+				System.out.println(shopNameDom.getAttribute("title"));
 				
 				JD.setCompanyName(shopNameDom.getAttribute("title"));
 			}else{
-				//System.out.println("nothing!");
+				System.out.println("nothing!");
 				JD.setCompanyName("");
 			}
 	}
 	
 	
-	public static void genBrandName(HtmlPage page,JDProduction JD){
+	private static void genBrandName(HtmlPage page,JDProduction JD){
 		
 		List<?> brandNameList = page.getByXPath("//ul[@id='parameter-brand']/li[1]");
 		HtmlListItem barandNameDom = (HtmlListItem) brandNameList.get(0);
@@ -319,20 +324,29 @@ public class HtmlUnitUtils {
 		 * @param client
 		 * @param skuid
 		 */
-		public static void genCommentAmount(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
+	private static void genCommentAmount(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
 				String link = "https://club.jd.com/comment/productCommentSummaries.action?referenceIds="+skuid;
-				String commentStr_amount = getDataByJsonp_Common(link,"CommentCountStr",client,"commentAmount");
-				//System.out.println(commentStr_amount);
+				System.out.println(skuid);
+				String commentStr_amount = "";
+				try{
+					commentStr_amount = getDataByJsonp_Common(link,"CommentCountStr",client,"commentAmount");
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				System.out.println(commentStr_amount);
 				
 				JD.setCommentNum(commentStr_amount);
 		}
 	
 	
 		//jd 的 price 通过 jsonp  返回数据(所以我们要模拟 请求)
-		public static void genPrice(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
+	private static void genPrice(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
 			String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C";
+			
+		
 			String price = getDataByJsonp_Common(link,"p",client,"price");
-			//System.out.println(price);
+			
+			System.out.println(price);
 			
 			JD.setPrice(price);
 		
@@ -347,7 +361,7 @@ public class HtmlUnitUtils {
 		 * @param kind   由于 jsonp 返回的数据格式是多饰多样的 所以我们通过 kind 获取 具体是要获取那种数据 {比如: price 或 commentAmount }
 		 * @return
 		 */
-		public static String  getDataByJsonp_Common(String currentLink,String keyword,WebClient client,String kind){
+	private static String  getDataByJsonp_Common(String currentLink,String keyword,WebClient client,String kind){
 			String returnValue = "";
 			Page page; //这里是 Page（爬json数据的）
 			try {
