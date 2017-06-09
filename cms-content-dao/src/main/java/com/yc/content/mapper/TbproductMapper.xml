@@ -14,7 +14,28 @@
     select product_name,supCate_name from yc_product 
   </select>
   
-  
+<!--   <insert id="insertJDItemInfo" parameterType="hashmap">
+	  insert into yc_product(standard_id,item_id)
+	  values
+	  <foreach collection="itemIdList" index="index" item="item"  separator="," >
+	    (#{standardId,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
+	  </foreach>
+</insert> -->
+
+
+
+
+ <insert id="insertJDItemInfo" parameterType="java.util.List">
+	  insert into yc_product(product_id,product_name,imgPath,price,commentAmount,companyName,supCate_name,subcate_name,brandName)
+  values
+  <foreach collection="list" item="item" index="index"
+   separator=",">
+   ("6666",#{item.productName,jdbcType=VARCHAR},#{item.imgPath,jdbcType=VARCHAR},#{item.price,jdbcType=VARCHAR},
+    #{item.commentAmount,jdbcType=VARCHAR}, #{item.companyName,jdbcType=VARCHAR}, #{item.productType_1st,jdbcType=VARCHAR},
+    #{item.productType_2nd,jdbcType=VARCHAR}, #{item.brandName,jdbcType=VARCHAR})
+  </foreach>
+
+</insert>
   
   
   

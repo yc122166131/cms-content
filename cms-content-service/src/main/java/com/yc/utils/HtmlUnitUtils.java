@@ -332,6 +332,7 @@ public class HtmlUnitUtils {
 					commentStr_amount = getDataByJsonp_Common(link,"CommentCountStr",client,"commentAmount");
 				}catch(Exception e){
 					e.printStackTrace();
+					System.out.println("==========================================================");
 				}
 				System.out.println(commentStr_amount);
 				

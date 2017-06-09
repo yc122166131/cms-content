@@ -13,4 +13,6 @@ public interface TbproductMapper {
 
 	public List<JDProduction> getAll();
 	
+	public void insertJDItemInfo(List<JDProduction> Jd_INFO);
+	
 }
