@@ -33,9 +33,9 @@ public class CrawlTest {
 	@Test
 	public void test2(){
 		List<JDProduction> list1 = new ArrayList<JDProduction>();
-		JDProduction jd1 = new JDProduction("Ð¡ºú","kafi");
+		JDProduction jd1 = new JDProduction("aaaa","kafi");
 		list1.add(jd1);
-		JDProduction jd2 = new JDProduction("aaa","fff");
+		JDProduction jd2 = new JDProduction("bbbb","fff");
 		list1.add(jd2);
 		productMapper.insertJDItemInfo(list1);
 		List<JDProduction> count = productMapper.getAll();

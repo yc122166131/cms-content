@@ -95,13 +95,6 @@
 	            <groupId>org.springframework</groupId>
 	            <artifactId>spring-test</artifactId>
 	        </dependency>
- 			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-			</dependency>
-
-
-
  			
     </dependencies>
     
