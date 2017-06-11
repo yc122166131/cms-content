@@ -9,6 +9,7 @@ public class JDProduction implements Serializable {
 	 */
 	private static final long serialVersionUID = 8251082441796321557L;
 	
+	private Long   productId;   //商品id
 	private String productName; //商品名称
 	private String imgPath; //图片地址
 	private String price; //商品价格
@@ -30,6 +31,14 @@ public class JDProduction implements Serializable {
 		this.productType_2nd = productType_2nd;
 	}
 	
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
 	public String getProductName() {
 		return productName;
 	}

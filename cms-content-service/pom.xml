@@ -96,6 +96,11 @@
 	            <artifactId>spring-test</artifactId>
 	        </dependency>
  			
+ 			<!-- redis -->
+ 			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+			</dependency>
     </dependencies>
     
     

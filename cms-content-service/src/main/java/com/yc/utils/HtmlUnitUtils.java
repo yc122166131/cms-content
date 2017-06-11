@@ -307,11 +307,15 @@ public class HtmlUnitUtils {
 	
 	private static void genBrandName(HtmlPage page,JDProduction JD){
 		
-		List<?> brandNameList = page.getByXPath("//ul[@id='parameter-brand']/li[1]");
-		HtmlListItem barandNameDom = (HtmlListItem) brandNameList.get(0);
-		//System.out.println(page.getUrl().toString());
-		//System.out.println(barandNameDom.getAttribute("title"));
-		JD.setBrandName(barandNameDom.getAttribute("title"));
+		try{
+			List<?> brandNameList = page.getByXPath("//ul[@id='parameter-brand']/li[1]");
+			HtmlListItem barandNameDom = (HtmlListItem) brandNameList.get(0);
+			//System.out.println(page.getUrl().toString());
+			//System.out.println(barandNameDom.getAttribute("title"));
+			JD.setBrandName(barandNameDom.getAttribute("title"));
+		}catch(Exception e){
+			JD.setBrandName("");
+		}
 	}
 	
 	
@@ -342,8 +346,8 @@ public class HtmlUnitUtils {
 	
 		//jd 的 price 通过 jsonp  返回数据(所以我们要模拟 请求)
 	private static void genPrice(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
-			String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C";
-			
+			//String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C"; //old 
+			String link = "https://p.3.cn/prices/mgets?pduid=33769083&skuIds=J_"+skuid+"%2C"; //0618
 		
 			String price = getDataByJsonp_Common(link,"p",client,"price");
 			

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.content.mapper.TbproductMapper;
+import com.yc.content.service.CrwalService;
 import com.yc.pojo.JDProduction;
 import com.yc.utils.HtmlUnitUtils;
 
@@ -21,6 +22,8 @@ public class CrwalAction {
 	
 	@Autowired
 	private  TbproductMapper productMapper;
+	@Autowired
+	private  CrwalService crwalService;
 	
 	@RequestMapping(value="/crawl/test",method=RequestMethod.POST)
 	@ResponseBody
@@ -31,7 +34,9 @@ public class CrwalAction {
 			pageCount = count.intValue();
 		}
 		if(!StringUtils.isBlank(url)){
-			List<JDProduction> list = HtmlUnitUtils.jdDataGenerator(url,pageCount);
+			List<JDProduction> tmplist = HtmlUnitUtils.jdDataGenerator(url,pageCount);
+			//redis 指定唯一 productId
+			List<JDProduction> list = crwalService.addProductId(tmplist);
 			productMapper.insertJDItemInfo(list);
 		}
 		

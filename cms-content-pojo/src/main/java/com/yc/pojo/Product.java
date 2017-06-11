@@ -3,6 +3,8 @@ package com.yc.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.beans.BeanUtils;
+
 public class Product implements Serializable {
 	
 	/**
@@ -16,13 +18,36 @@ public class Product implements Serializable {
 	private String price;         //商品价格
 	private String commentAmount; //评论数量
 	private String companyName; //公司名(xxx专营店)
-	private String brandId;     //对应的商标
-	private Long   subCateId;   // 商品所属小类
+	private String brandName;     //对应的商标
+	private String supCateId;   // 商品所属大类
+	private String subCateId;   // 商品所属小类
 	private String enableFlag;  // 是否可用
 	private Date   createTime;  //创建时间
 	private Date   updateTime;  //更新时间
 	
 	
+	
+	public Product() {
+		super();
+	}
+	public Product(JDProduction jd) {
+		BeanUtils.copyProperties(jd, this);
+		this.setSupCateId(jd.getProductType_1st());
+		this.setSubCateId(jd.getProductType_2nd());
+	}
+	
+	public String getBrandName() {
+		return brandName;
+	}
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+	public String getSupCateId() {
+		return supCateId;
+	}
+	public void setSupCateId(String supCateId) {
+		this.supCateId = supCateId;
+	}
 	public Long getProductId() {
 		return productId;
 	}
@@ -59,10 +84,10 @@ public class Product implements Serializable {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	public Long getSubCateId() {
+	public String getSubCateId() {
 		return subCateId;
 	}
-	public void setSubCateId(Long subCateId) {
+	public void setSubCateId(String subCateId) {
 		this.subCateId = subCateId;
 	}
 	public Date getCreateTime() {
@@ -76,12 +101,6 @@ public class Product implements Serializable {
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
-	}
-	public String getBrand() {
-		return brandId;
-	}
-	public void setBrand(String brandId) {
-		this.brandId = brandId;
 	}
 	public String getEnableFlag() {
 		return enableFlag;

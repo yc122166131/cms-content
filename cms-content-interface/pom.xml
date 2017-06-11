@@ -7,4 +7,11 @@
   </parent>
   <groupId>cms-content-interface</groupId>
   <artifactId>cms-content-interface</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>cms-content-pojo</groupId>
+  		<artifactId>cms-content-pojo</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

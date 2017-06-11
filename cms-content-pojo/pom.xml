@@ -7,4 +7,13 @@
   </parent>
   <groupId>cms-content-pojo</groupId>
   <artifactId>cms-content-pojo</artifactId>
+  
+  
+ 		<dependencies>
+ 			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+			</dependency>
+ 		</dependencies>
+  
 </project>
