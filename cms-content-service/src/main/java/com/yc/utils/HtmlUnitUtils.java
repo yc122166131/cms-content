@@ -346,8 +346,8 @@ public class HtmlUnitUtils {
 	
 		//jd 的 price 通过 jsonp  返回数据(所以我们要模拟 请求)
 	private static void genPrice(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
-			//String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C"; //old 
-			String link = "https://p.3.cn/prices/mgets?pduid=33769083&skuIds=J_"+skuid+"%2C"; //0618
+			String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C"; //old 
+			//String link = "https://p.3.cn/prices/mgets?pduid=33769083&skuIds=J_"+skuid+"%2C"; //0618
 		
 			String price = getDataByJsonp_Common(link,"p",client,"price");
 			

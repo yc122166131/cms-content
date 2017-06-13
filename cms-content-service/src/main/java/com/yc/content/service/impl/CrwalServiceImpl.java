@@ -26,6 +26,7 @@ public class CrwalServiceImpl implements CrwalService {
 			Long currId = jedisClient.incr("yc_productId");
             //  BeanUtils.copyProperties(jp, p);
 			jp.setProductId(currId);
+			jdLists.add(jp);
 		}
 		return jdLists;
 	}

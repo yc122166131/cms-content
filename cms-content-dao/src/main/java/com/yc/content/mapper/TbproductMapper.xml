@@ -26,7 +26,7 @@
 
 
  <insert id="insertJDItemInfo" parameterType="java.util.List">
-	  insert into yc_product(product_id,product_name,imgPath,price,commentAmount,companyName,supCate_name,type_id,brandName)
+	  insert into yc_product(product_id,product_name,imgPath,price,commentAmount,companyName,supCate_name,subCate_name,brandName)
   values
   <foreach collection="list" item="item" index="index"
    separator=",">

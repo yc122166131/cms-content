@@ -101,6 +101,30 @@
 				<groupId>redis.clients</groupId>
 				<artifactId>jedis</artifactId>
 			</dependency>
+			
+			<!-- dubbo相关的jar包 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<exclusions>
+					<exclusion>
+						<artifactId>spring</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>netty</artifactId>
+						<groupId>org.jboss.netty</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.github.sgroschupf</groupId>
+				<artifactId>zkclient</artifactId>
+			</dependency> 
     </dependencies>
     
     
@@ -108,7 +132,6 @@
     
     <build> 
 		<plugins>  
-		
 		
 			<!--  maven打包/install 报错：Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.5:test-->
 			 	<plugin>  
