@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.yc.content.mapper.TbproductMapper;
 import com.yc.content.service.ContentService;
-import com.yc.pojo.JDProduction;
+import com.yc.pojo.product.JDProduction;
 
 
 /**

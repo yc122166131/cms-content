@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yc.content.mapper.TbproductMapper;
 import com.yc.content.service.CrwalService;
-import com.yc.pojo.JDProduction;
+import com.yc.pojo.product.JDProduction;
 import com.yc.utils.HtmlUnitUtils;
 
 

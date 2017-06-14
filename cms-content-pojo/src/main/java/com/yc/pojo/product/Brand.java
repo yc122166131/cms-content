@@ -1,4 +1,4 @@
-package com.yc.pojo;
+package com.yc.pojo.product;
 
 import java.io.Serializable;
 import java.util.Date;

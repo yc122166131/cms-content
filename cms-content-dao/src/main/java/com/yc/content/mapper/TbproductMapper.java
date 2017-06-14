@@ -2,10 +2,11 @@ package com.yc.content.mapper;
 
 import java.util.List;
 
-import com.yc.pojo.JDProduction;
+import com.yc.pojo.product.JDProduction;
 
 /**
  * product Mapper 
+ * 商品 mapper
  * @author yuanchen
  *
  */

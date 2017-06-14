@@ -14,7 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yc.content.mapper.TbproductMapper;
-import com.yc.pojo.JDProduction;
+import com.yc.content.mapper.TbproductTypeMapper;
+import com.yc.pojo.product.JDProduction;
 
 @RunWith(SpringJUnit4ClassRunner.class)  
 @ContextConfiguration(locations={"classpath:spring/applicationContext-dao.xml"})  
@@ -22,6 +23,8 @@ public class CrawlTest {
 
 	@Autowired
 	private  TbproductMapper productMapper;
+	@Autowired
+	private  TbproductTypeMapper productTypeMapper;
 	
 	@Test
 	public void testCrawl(){
@@ -42,5 +45,14 @@ public class CrawlTest {
 		System.out.println(count);
 	
 	}
+	
+	@Test
+	public void testContent(){
+		List list = productTypeMapper.getProductTypeList();
+		System.out.println(list);
+	}
+	
+	
+	
 	
 }

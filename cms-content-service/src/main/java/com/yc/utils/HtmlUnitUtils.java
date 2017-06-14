@@ -20,7 +20,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.yc.pojo.JDProduction;
+import com.yc.pojo.product.JDProduction;
 
 /**
  * 正式版

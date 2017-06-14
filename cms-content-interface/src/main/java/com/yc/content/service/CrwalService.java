@@ -2,7 +2,7 @@ package com.yc.content.service;
 
 import java.util.List;
 
-import com.yc.pojo.JDProduction;
+import com.yc.pojo.product.JDProduction;
 
 public interface CrwalService {
 

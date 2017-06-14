@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.yc.content.jedis.JedisClient;
 import com.yc.content.service.CrwalService;
-import com.yc.pojo.JDProduction;
+import com.yc.pojo.product.JDProduction;
 
 @Service(value="crwalService")
 public class CrwalServiceImpl implements CrwalService {

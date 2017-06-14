@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.content.mapper.TbproductTypeMapper" >
+
+<!-- resultMap 里面 只需要放一些 特殊的 (即 pojo 和  数据库字段 不匹配的 字段 )做一下映射即可 -->
+ <resultMap id="leftMenu" type="productLeftMenu" >
+    <result column="supId" property="supCateId" jdbcType="VARCHAR" />
+    <result column="supName" property="supCateName" jdbcType="VARCHAR" />
+    <collection property="childType" resultMap="childTypeResult" />
+  </resultMap>
+
+  <resultMap id="childTypeResult" type="com.yc.pojo.product.SubType" >
+    <result column="subId"  property="subCateId" jdbcType="VARCHAR" /> 
+    <result column="subName"  property="subCateName" jdbcType="VARCHAR" />
+  </resultMap>
+	
+
+
+<!-- 也可以指定 查询出 一些 字段 (其余的 全部为 null) -->
+  <select id="getProductTypeList" resultMap="leftMenu">
+         SELECT  p.id as supId,p.type_name as supName ,c.id as subId,c.type_name as subName
+           FROM yc_product_type p , yc_product_type c
+             WHERE c.parent_id = p.id AND p.parent_id = 0
+  </select>
+  
+  
+  
+  
+  
+  
+</mapper>

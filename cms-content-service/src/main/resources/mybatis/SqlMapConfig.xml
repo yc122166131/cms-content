@@ -6,6 +6,7 @@
 	 <!-- 设置别名 -->
     <typeAliases>
         <!-- type指的是javabean的完全限定名   alias就是指代别名-->
-        <typeAlias alias="jdproduction" type="com.yc.pojo.JDProduction" />
+        <typeAlias alias="jdproduction" type="com.yc.pojo.product.JDProduction" />
+        <typeAlias alias="productLeftMenu" type="com.yc.pojo.dto.ProductLeftMenuDto" />
     </typeAliases>
 </configuration>
