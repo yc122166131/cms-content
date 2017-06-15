@@ -14,13 +14,13 @@ public class SubType implements Serializable {
 	 */
 	private static final long serialVersionUID = -3336658816928863945L;
 
-	private String subCateId;
+	private Long subCateId;
 	private String subCateName;
 	
-	public String getSubCateId() {
+	public Long getSubCateId() {
 		return subCateId;
 	}
-	public void setSubCateId(String subCateId) {
+	public void setSubCateId(Long subCateId) {
 		this.subCateId = subCateId;
 	}
 	public String getSubCateName() {

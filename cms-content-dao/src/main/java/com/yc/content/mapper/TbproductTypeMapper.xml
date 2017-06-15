@@ -3,14 +3,14 @@
 <mapper namespace="com.yc.content.mapper.TbproductTypeMapper" >
 
 <!-- resultMap 里面 只需要放一些 特殊的 (即 pojo 和  数据库字段 不匹配的 字段 )做一下映射即可 -->
- <resultMap id="leftMenu" type="productLeftMenu" >
-    <result column="supId" property="supCateId" jdbcType="VARCHAR" />
+ <resultMap id="leftMenu" type="productLeftMenuDto">
+    <result column="supId" property="supCateId" jdbcType="BIGINT" />
     <result column="supName" property="supCateName" jdbcType="VARCHAR" />
     <collection property="childType" resultMap="childTypeResult" />
   </resultMap>
 
-  <resultMap id="childTypeResult" type="com.yc.pojo.product.SubType" >
-    <result column="subId"  property="subCateId" jdbcType="VARCHAR" /> 
+  <resultMap id="childTypeResult" type="subType">
+    <result column="subId"  property="subCateId" jdbcType="BIGINT" /> 
     <result column="subName"  property="subCateName" jdbcType="VARCHAR" />
   </resultMap>
 	

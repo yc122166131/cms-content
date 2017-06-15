@@ -18,7 +18,7 @@ public class JDProduction implements Serializable {
 	private String productType_1st; // 商品大类
 	private String productType_2nd; // 商品小类(爬取下来的商品 绑定的是 商品小类)
 	private String brandName;  // 商品 所属品牌名称
-
+	private String typeId; //商品类别(小类Id)
 	
 	
 	public JDProduction() {
@@ -30,6 +30,16 @@ public class JDProduction implements Serializable {
 		this.productType_1st = productType_1st;
 		this.productType_2nd = productType_2nd;
 	}
+	
+	
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+
 	
 	public Long getProductId() {
 		return productId;

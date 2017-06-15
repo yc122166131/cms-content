@@ -8,6 +8,8 @@ import com.yc.pojo.product.SubType;
 
 /**
  * 商品左菜单 Dto 
+ * parent_id : 1 subid1
+ * 			   2 subid2
  * @author yuanchen
  *
  */
@@ -19,15 +21,15 @@ public class ProductLeftMenuDto implements Serializable{
 	 */
 	private static final long serialVersionUID = 356255885106913890L;
 	
-	private String    supCateId;  //大类
+	private Long    supCateId;  //大类
 	private String  supCateName;  //大类名称
-	private List<SubType> childType;  //小类(集合)
+	private Set<SubType> childType;  //小类(集合)
 	
 	
-	public String getSupCateId() {
+	public Long getSupCateId() {
 		return supCateId;
 	}
-	public void setSupCateId(String supCateId) {
+	public void setSupCateId(Long supCateId) {
 		this.supCateId = supCateId;
 	}
 	public String getSupCateName() {
@@ -36,10 +38,10 @@ public class ProductLeftMenuDto implements Serializable{
 	public void setSupCateName(String supCateName) {
 		this.supCateName = supCateName;
 	}
-	public List<SubType> getChildType() {
+	public Set<SubType> getChildType() {
 		return childType;
 	}
-	public void setChildType(List<SubType> childType) {
+	public void setChildType(Set<SubType> childType) {
 		this.childType = childType;
 	}
 	
