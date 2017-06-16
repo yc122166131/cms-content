@@ -8,6 +8,7 @@ yc_product	CREATE TABLE `yc_product` (
   `commentAmount` varchar(30) DEFAULT NULL,
   `companyName` varchar(250) DEFAULT NULL,
   `supCate_name` varchar(250) DEFAULT NULL,
+  `subCate_name` varchar(200) DEFAULT NULL,
   `type_id` varchar(250) DEFAULT NULL,
   `brandName` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
