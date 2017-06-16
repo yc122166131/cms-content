@@ -62,7 +62,7 @@ public class CrawlTest {
 	@Test
 	public void testProductByTypeId(){
 		
-		List<JDProduction> list1 = productMapper.getProductInfoByProductTypeId(new Long(8));
+		List<JDProduction> list1 = productMapper.getProductInfoByProductTypeId(new Long(11));
 		System.out.println(list1);
 	
 	}
