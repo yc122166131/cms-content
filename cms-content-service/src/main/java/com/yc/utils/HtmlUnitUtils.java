@@ -37,7 +37,7 @@ public class HtmlUnitUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		List<JDProduction> list  = jdDataGenerator("https://list.jd.com/list.html?cat=1315,1343,9708",1);
+		List<JDProduction> list  = jdDataGenerator("https://list.jd.com/list.html?cat=1315,1345,1368&ev=2872_35271&sort=sort_rank_asc&trans=1&JL=3_%E6%AC%BE%E5%BC%8F_%E4%B8%89%E7%82%B9%E5%BC%8F#J_crumbsBar",1);
 		System.out.println(list);
 	}
 	
@@ -252,16 +252,37 @@ public class HtmlUnitUtils {
 		HtmlPage page;
 		try {
 			page = client.getPage(TM_href);
-			List<?> imgLists= page.getByXPath("//div[@id='preview']"   
+			
+			//只获取第一张图片
+			/*	List<?> imgLists= page.getByXPath("//div[@id='preview']"   
 					+ "/div[1]/img[1]");
 			HtmlImage himg = (HtmlImage) imgLists.get(0);
 			String imgDom =  himg.getAttribute("data-origin");
 			if(imgDom.isEmpty()){
 				imgDom = himg.getAttribute("src"); //特殊情况
-			}
+			}*/
 			//System.out.println(imgDom);
 			
-			JD.setImgPath(imgDom); 
+			//获取所有图片
+			String imgDoms = "";
+			List<?> imgLists= page.getByXPath("//div[@class='spec-list']"   
+					+ "/div[@class='spec-items']/ul[1]/li/img");
+			for(int i = 0 ; i < imgLists.size() ; i++){
+				HtmlImage himg = (HtmlImage)imgLists.get(i);
+				String imgDom =  himg.getAttribute("data-url");
+				if(imgDom.isEmpty()){
+					imgDom = himg.getAttribute("src"); //特殊情况
+				}
+				if(i != imgLists.size() -1){
+					imgDoms+=imgDom+",";
+				}else{
+					imgDoms +=imgDom;
+				}
+				
+				
+			}
+			JD.setImgPath(imgDoms); 
+			System.out.println(imgDoms);
 			genproductionName(page,JD); ////进店   获取商品名称 
 			genShopName(page,JD); //// 进店 获取  经销商店名称
 			genBrandName(page,JD);  //// 进店 获取  商品品牌名称
@@ -346,8 +367,8 @@ public class HtmlUnitUtils {
 	
 		//jd 的 price 通过 jsonp  返回数据(所以我们要模拟 请求)
 	private static void genPrice(HtmlDivision div,WebClient client,String skuid,JDProduction JD){
-			String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C"; //old 
-			//String link = "https://p.3.cn/prices/mgets?pduid=33769083&skuIds=J_"+skuid+"%2C"; //0618
+			//String link = "https://p.3.cn/prices/mgets?skuIds=J_"+skuid+"%2C"; //old 
+			String link = "https://p.3.cn/prices/mgets?pduid=33769083&skuIds=J_"+skuid+"%2C"; //0618
 		
 			String price = getDataByJsonp_Common(link,"p",client,"price");
 			
