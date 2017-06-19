@@ -242,9 +242,7 @@ public class HtmlUnitUtils {
 		}
 		
 		return jdcollectiontList;
-		
 	}
-	
 	
 	//进店 获取图片信息 
 	private static void genPic(String skuid,WebClient client,JDProduction JD){
@@ -254,17 +252,17 @@ public class HtmlUnitUtils {
 			page = client.getPage(TM_href);
 			
 			//只获取第一张图片
-			/*	List<?> imgLists= page.getByXPath("//div[@id='preview']"   
+				List<?> imgLists= page.getByXPath("//div[@id='preview']"   
 					+ "/div[1]/img[1]");
 			HtmlImage himg = (HtmlImage) imgLists.get(0);
 			String imgDom =  himg.getAttribute("data-origin");
 			if(imgDom.isEmpty()){
 				imgDom = himg.getAttribute("src"); //特殊情况
-			}*/
-			//System.out.println(imgDom);
+			}
+			System.out.println(imgDom);
 			
 			//获取所有图片
-			String imgDoms = "";
+		/*	String imgDoms = "";
 			List<?> imgLists= page.getByXPath("//div[@class='spec-list']"   
 					+ "/div[@class='spec-items']/ul[1]/li/img");
 			for(int i = 0 ; i < imgLists.size() ; i++){
@@ -280,9 +278,11 @@ public class HtmlUnitUtils {
 				}
 				
 				
-			}
-			JD.setImgPath(imgDoms); 
-			System.out.println(imgDoms);
+			}*/
+			/*System.out.println(imgDoms);*/
+			
+			
+			JD.setImgPath(imgDom); 
 			genproductionName(page,JD); ////进店   获取商品名称 
 			genShopName(page,JD); //// 进店 获取  经销商店名称
 			genBrandName(page,JD);  //// 进店 获取  商品品牌名称
